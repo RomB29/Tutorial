@@ -1,0 +1,9 @@
+function prevoirAge() {
+
+    let age = prompt("Entrez votre âge");
+    // age = parseInt(age); parseFloat marche également, on recommende toutefois Number
+    age = Number(age);
+    alert("Dans 1an, vous aurez " + (age + 1) + " ans");
+}
+
+prevoirAge();

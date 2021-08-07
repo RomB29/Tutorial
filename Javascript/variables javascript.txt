@@ -1,0 +1,8 @@
+var / let
+var -> globale
+let -> locale
+
+exemple:
+
+let prenom = "Marc";   //  le ; n'est pas obligatoire si après l'instruction il y a un retour de lignes
+// une variable ne peut pas être déclarer 2 fois

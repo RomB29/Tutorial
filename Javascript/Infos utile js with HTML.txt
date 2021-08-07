@@ -1,0 +1,21 @@
+Sélectionner une classe
+let error      = document.querySelector(".text-danger");
+
+Sélectionner un ID
+let input      = document.querySelector("#prix"); 
+
+Créer un evenement
+input.addEventListener('keyup', () => { // click pour un clique, keyup si l'utilisateur entre des datas vias le clavier
+
+});
+
+modifier le style d'un objet (exemple borderColor)
+input.style.borderColor = "red";
+
+Créer un nouveau élément dans l'HTML
+ let instruction = document.createElement('div');
+exemple: instruction.innerHTML = "#" + coups + " ( " + nombre + " ) C'est plus !";
+
+Puis ajouter cet élément dans une classe 
+instruction.className = "instruction fini";
+
