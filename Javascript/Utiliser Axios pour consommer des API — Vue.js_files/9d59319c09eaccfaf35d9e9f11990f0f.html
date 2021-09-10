@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)https://cdpn.io/team/Vue/fullembedgrid/9d59319c09eaccfaf35d9e9f11990f0f?animations=run&type=embed -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  
+<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+<meta name="apple-mobile-web-app-title" content="CodePen">
+
+<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+
+<link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+
+
+  <meta name="robots" content="noindex">
+  <title>CodePen - Third Step Axios and Vue</title>
+  <link href="./css" rel="stylesheet">
+  <link rel="stylesheet" href="./normalize.min.css">
+
+  
+  
+<style>
+body {
+  display: flex;
+  justify-content: center;
+  background: #7E8D85;
+  font-family: "Roboto Slab", serif;
+  line-height: 1.4;
+}
+
+#app {
+  margin-top: 20px;
+  width: 300px;
+  padding: 0 40px 40px;
+  background: #2F242C;
+  border-radius: 5px;
+  color: #B3BFB8;
+}
+
+h1 {
+  color: #F0F7F4;
+}
+
+.lighten {
+  color: white;
+}
+</style>
+
+  
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no">
+  <div id="app"><h1>Bitcoin Price Index</h1> <div class="currency">
+    United States Dollar: 
+    <span class="lighten"><span>$</span>46564.07
+    </span></div><div class="currency">
+    British Pound Sterling: 
+    <span class="lighten"><span>£</span>34142.64
+    </span></div><div class="currency">
+    Euro: 
+    <span class="lighten"><span>€</span>39880.87
+    </span></div></div>
+    <script src="./stopExecutionOnTimeout-8216c69d01441f36c0ea791ae2d4469f0f8ff5326f00ae2d00e4bb7d20e24edb.js.télécharger"></script>
+
+  <script src="./vue.js.télécharger"></script>
+<script src="./axios.js.télécharger"></script>
+      <script id="rendered-js">
+new Vue({
+  el: '#app',
+  data() {
+    return {
+      info: null };
+
+  },
+  filters: {
+    currencydecimal(value) {
+      return value.toFixed(2);
+    } },
+
+  mounted() {
+    axios.
+    get('https://api.coindesk.com/v1/bpi/currentprice.json').
+    then(response => this.info = response.data.bpi);
+  } });
+//# sourceURL=pen.js
+    </script>
+
+  
+
+  <script src="./iframeRefreshCSS-4793b73c6332f7f14a9b6bba5d5e62748e9d1bd0b5c52d7af6376f3d1c625d7e.js.télécharger"></script>
+
+
+
+ 
+</body></html>

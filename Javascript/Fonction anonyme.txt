@@ -2,6 +2,11 @@
     console.log('Je suis une fonction anonyme');
   }
   fonctionAnonyme();
+    
+  function fonctionNonAnonyme (){
+    console.log('Je suis une fonction anonyme');
+  }
+	
   (function(){ console.log('Je suis une fonction anonyme')})(); // ici nous avons juste englobé notre fonction dans des paranthèses, et ajouté "()" à la fin
   
   

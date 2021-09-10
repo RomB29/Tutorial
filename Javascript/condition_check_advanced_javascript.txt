@@ -1,0 +1,9 @@
+ var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+if title != '' {
+	title = [Op.like + title];
+}
+
+else {
+	title = NULL;
+}

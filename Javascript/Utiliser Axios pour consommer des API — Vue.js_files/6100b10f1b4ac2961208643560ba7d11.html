@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)https://cdpn.io/team/Vue/fullembedgrid/6100b10f1b4ac2961208643560ba7d11?animations=run&type=embed -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  
+<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+<meta name="apple-mobile-web-app-title" content="CodePen">
+
+<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+
+<link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+
+
+  <meta name="robots" content="noindex">
+  <title>CodePen - Second Step Axios and Vue</title>
+  
+  <link rel="stylesheet" href="./normalize.min.css">
+
+  
+  
+
+  
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no">
+  <div id="app">
+  {
+  "USD": {
+    "code": "USD",
+    "symbol": "&amp;#36;",
+    "rate": "46,519.7356",
+    "description": "United States Dollar",
+    "rate_float": 46519.7356
+  },
+  "GBP": {
+    "code": "GBP",
+    "symbol": "&amp;pound;",
+    "rate": "34,110.1309",
+    "description": "British Pound Sterling",
+    "rate_float": 34110.1309
+  },
+  "EUR": {
+    "code": "EUR",
+    "symbol": "&amp;euro;",
+    "rate": "39,842.8975",
+    "description": "Euro",
+    "rate_float": 39842.8975
+  }
+}
+</div>
+    <script src="./stopExecutionOnTimeout-8216c69d01441f36c0ea791ae2d4469f0f8ff5326f00ae2d00e4bb7d20e24edb.js.télécharger"></script>
+
+  <script src="./vue.js.télécharger"></script>
+<script src="./axios.js.télécharger"></script>
+      <script id="rendered-js">
+new Vue({
+  el: '#app',
+  data() {
+    return {
+      info: null };
+
+  },
+  mounted() {
+    axios.
+    get('https://api.coindesk.com/v1/bpi/currentprice.json').
+    then(response => this.info = response.data.bpi);
+  } });
+//# sourceURL=pen.js
+    </script>
+
+  
+
+  <script src="./iframeRefreshCSS-4793b73c6332f7f14a9b6bba5d5e62748e9d1bd0b5c52d7af6376f3d1c625d7e.js.télécharger"></script>
+
+
+
+ 
+</body></html>

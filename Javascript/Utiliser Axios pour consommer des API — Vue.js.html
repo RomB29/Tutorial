@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html -->
+<html lang="en" class="with-v3-banner"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">.gitter-hidden{box-sizing:border-box;display:none}.gitter-icon{box-sizing:border-box;width:22px;height:22px;fill:currentColor}.gitter-chat-embed{box-sizing:border-box;z-index:100;position:fixed;top:0;left:60%;bottom:0;right:0;display:-ms-flexbox;display:flex;-ms-flex-direction:row;flex-direction:row;background-color:#fff;border-left:1px solid #333;box-shadow:-12px 0 18px 0 rgba(50,50,50,.3);transition:transform .3s cubic-bezier(.16,.22,.22,1.7)}@context border-box{.gitter-chat-embed{box-sizing:border-box;background-color:#fff}}.gitter-chat-embed.is-collapsed:not(.is-loading){box-sizing:border-box;transform:translateX(110%)}.gitter-chat-embed:after{box-sizing:border-box;content:"";z-index:-1;position:absolute;top:0;left:100%;bottom:0;right:-100%;background-color:#fff}@context border-box{.gitter-chat-embed:after{box-sizing:border-box;background-color:#fff}}@media(max-width:1150px){.gitter-chat-embed{box-sizing:border-box;left:45%}}@media(max-width:944px){.gitter-chat-embed{box-sizing:border-box;left:30%}}@media(max-width:600px){.gitter-chat-embed{box-sizing:border-box;left:15%}}@media(max-width:500px){.gitter-chat-embed{box-sizing:border-box;left:0;border-left:none}}.gitter-chat-embed>iframe{box-sizing:border-box;-ms-flex:1;flex:1;width:100%;height:100%;border:0}.gitter-chat-embed-loading-wrapper{box-sizing:border-box;position:absolute;top:0;left:0;bottom:0;right:0;display:none;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center}.is-loading .gitter-chat-embed-loading-wrapper{box-sizing:border-box;display:-ms-flexbox;display:flex}.gitter-chat-embed-loading-indicator{box-sizing:border-box;opacity:.75;background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNzkyIDE3OTIiIGZpbGw9IiMzYTMxMzMiPjxwYXRoIGQ9Ik01MjYgMTM5NHEwIDUzLTM3LjUgOTAuNXQtOTAuNSAzNy41cS01MiAwLTkwLTM4dC0zOC05MHEwLTUzIDM3LjUtOTAuNXQ5MC41LTM3LjUgOTAuNSAzNy41IDM3LjUgOTAuNXptNDk4IDIwNnEwIDUzLTM3LjUgOTAuNXQtOTAuNSAzNy41LTkwLjUtMzcuNS0zNy41LTkwLjUgMzcuNS05MC41IDkwLjUtMzcuNSA5MC41IDM3LjUgMzcuNSA5MC41em0tNzA0LTcwNHEwIDUzLTM3LjUgOTAuNXQtOTAuNSAzNy41LTkwLjUtMzcuNS0zNy41LTkwLjUgMzcuNS05MC41IDkwLjUtMzcuNSA5MC41IDM3LjUgMzcuNSA5MC41em0xMjAyIDQ5OHEwIDUyLTM4IDkwdC05MCAzOHEtNTMgMC05MC41LTM3LjV0LTM3LjUtOTAuNSAzNy41LTkwLjUgOTAuNS0zNy41IDkwLjUgMzcuNSAzNy41IDkwLjV6bS05NjQtOTk2cTAgNjYtNDcgMTEzdC0xMTMgNDctMTEzLTQ3LTQ3LTExMyA0Ny0xMTMgMTEzLTQ3IDExMyA0NyA0NyAxMTN6bTExNzAgNDk4cTAgNTMtMzcuNSA5MC41dC05MC41IDM3LjUtOTAuNS0zNy41LTM3LjUtOTAuNSAzNy41LTkwLjUgOTAuNS0zNy41IDkwLjUgMzcuNSAzNy41IDkwLjV6bS02NDAtNzA0cTAgODAtNTYgMTM2dC0xMzYgNTYtMTM2LTU2LTU2LTEzNiA1Ni0xMzYgMTM2LTU2IDEzNiA1NiA1NiAxMzZ6bTUzMCAyMDZxMCA5My02NiAxNTguNXQtMTU4IDY1LjVxLTkzIDAtMTU4LjUtNjUuNXQtNjUuNS0xNTguNXEwLTkyIDY1LjUtMTU4dDE1OC41LTY2cTkyIDAgMTU4IDY2dDY2IDE1OHoiLz48L3N2Zz4=);animation:spin 2s infinite linear}@keyframes spin{0%{box-sizing:border-box;transform:rotate(0deg)}to{box-sizing:border-box;transform:rotate(359.9deg)}}.gitter-chat-embed-action-bar{box-sizing:border-box;position:absolute;top:0;left:0;right:0;display:-ms-flexbox;display:flex;-ms-flex-pack:end;justify-content:flex-end;padding-bottom:.7em;background:linear-gradient(180deg,#fff 0,#fff 50%,hsla(0,0%,100%,0))}.gitter-chat-embed-action-bar-item{box-sizing:border-box;display:-ms-flexbox;display:flex;-ms-flex-pack:center;justify-content:center;-ms-flex-align:center;align-items:center;width:40px;height:40px;padding-left:0;padding-right:0;opacity:.65;background:none;background-position:50%;background-repeat:no-repeat;background-size:22px 22px;border:0;outline:none;cursor:pointer;cursor:hand;transition:all .2s ease}.gitter-chat-embed-action-bar-item:focus,.gitter-chat-embed-action-bar-item:hover{box-sizing:border-box;opacity:1}.gitter-chat-embed-action-bar-item:active{box-sizing:border-box;filter:hue-rotate(80deg) saturate(150)}.gitter-chat-embed-action-bar-item-pop-out{box-sizing:border-box;margin-right:-4px;background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTcxLjQyOSIgZmlsbD0iIzNhMzEzMyI+PHBhdGggZD0iTTE1Ny4xNDMsMTAzLjU3MXYzNS43MTRjMCw4Ljg1NC0zLjE0NCwxNi40MjYtOS40MzEsMjIuNzEzcy0xMy44NTgsOS40MzEtMjIuNzEyLDkuNDMxSDMyLjE0MyBjLTguODU0LDAtMTYuNDI1LTMuMTQ0LTIyLjcxMi05LjQzMVMwLDE0OC4xNCwwLDEzOS4yODVWNDYuNDI5YzAtOC44NTQsMy4xNDQtMTYuNDI1LDkuNDMxLTIyLjcxMiBjNi4yODctNi4yODcsMTMuODU4LTkuNDMxLDIyLjcxMi05LjQzMWg3OC41NzJjMS4wNDEsMCwxLjg5NiwwLjMzNSwyLjU2NiwxLjAwNGMwLjY3LDAuNjcsMS4wMDQsMS41MjUsMS4wMDQsMi41NjdWMjUgYzAsMS4wNDItMC4zMzQsMS44OTctMS4wMDQsMi41NjdjLTAuNjcsMC42Ny0xLjUyNSwxLjAwNC0yLjU2NiwxLjAwNEgzMi4xNDNjLTQuOTExLDAtOS4xMTUsMS43NDktMTIuNjEyLDUuMjQ2IHMtNS4yNDYsNy43MDEtNS4yNDYsMTIuNjEydjkyLjg1NmMwLDQuOTExLDEuNzQ5LDkuMTE1LDUuMjQ2LDEyLjYxMnM3LjcwMSw1LjI0NSwxMi42MTIsNS4yNDVIMTI1YzQuOTEsMCw5LjExNS0xLjc0OCwxMi42MTEtNS4yNDUgYzMuNDk3LTMuNDk3LDUuMjQ2LTcuNzAxLDUuMjQ2LTEyLjYxMnYtMzUuNzE0YzAtMS4wNDIsMC4zMzQtMS44OTcsMS4wMDQtMi41NjdjMC42Ny0wLjY2OSwxLjUyNS0xLjAwNCwyLjU2Ny0xLjAwNGg3LjE0MyBjMS4wNDIsMCwxLjg5NywwLjMzNSwyLjU2NywxLjAwNEMxNTYuODA5LDEwMS42NzQsMTU3LjE0MywxMDIuNTI5LDE1Ny4xNDMsMTAzLjU3MXogTTIwMCw3LjE0M3Y1Ny4xNDMgYzAsMS45MzUtMC43MDcsMy42MDktMi4xMjEsNS4wMjJjLTEuNDEzLDEuNDE0LTMuMDg4LDIuMTIxLTUuMDIxLDIuMTIxYy0xLjkzNSwwLTMuNjA5LTAuNzA3LTUuMDIyLTIuMTIxbC0xOS42NDQtMTkuNjQzIGwtNzIuNzY3LDcyLjc2OWMtMC43NDQsMC43NDQtMS42LDEuMTE1LTIuNTY3LDEuMTE1cy0xLjgyMy0wLjM3MS0yLjU2Ny0xLjExNUw3Ny41NjcsMTA5LjcxYy0wLjc0NC0wLjc0NC0xLjExNi0xLjYtMS4xMTYtMi41NjcgYzAtMC45NjcsMC4zNzItMS44MjIsMS4xMTYtMi41NjZsNzIuNzY4LTcyLjc2OGwtMTkuNjQ0LTE5LjY0M2MtMS40MTMtMS40MTQtMi4xMi0zLjA4OC0yLjEyLTUuMDIyYzAtMS45MzUsMC43MDctMy42MDksMi4xMi01LjAyMiBDMTMyLjEwNSwwLjcwNywxMzMuNzc5LDAsMTM1LjcxNSwwaDU3LjE0M2MxLjkzNCwwLDMuNjA4LDAuNzA3LDUuMDIxLDIuMTIxQzE5OS4yOTMsMy41MzQsMjAwLDUuMjA4LDIwMCw3LjE0M3oiLz48L3N2Zz4=)}.gitter-chat-embed-action-bar-item-collapse-chat{box-sizing:border-box;background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNzEuNDI5IDE3MS40MjkiIGZpbGw9IiMzYTMxMzMiPjxwYXRoIGQ9Ik0xMjIuNDMzLDEwNi4xMzhsLTE2LjI5NSwxNi4yOTVjLTAuNzQ0LDAuNzQ0LTEuNiwxLjExNi0yLjU2NiwxLjExNmMtMC45NjgsMC0xLjgyMy0wLjM3Mi0yLjU2Ny0xLjExNmwtMTUuMjktMTUuMjkgbC0xNS4yOSwxNS4yOWMtMC43NDQsMC43NDQtMS42LDEuMTE2LTIuNTY3LDEuMTE2cy0xLjgyMy0wLjM3Mi0yLjU2Ny0xLjExNmwtMTYuMjk0LTE2LjI5NWMtMC43NDQtMC43NDQtMS4xMTYtMS42LTEuMTE2LTIuNTY2IGMwLTAuOTY4LDAuMzcyLTEuODIzLDEuMTE2LTIuNTY3bDE1LjI5LTE1LjI5bC0xNS4yOS0xNS4yOWMtMC43NDQtMC43NDQtMS4xMTYtMS42LTEuMTE2LTIuNTY3czAuMzcyLTEuODIzLDEuMTE2LTIuNTY3IEw2NS4yOSw0OC45OTZjMC43NDQtMC43NDQsMS42LTEuMTE2LDIuNTY3LTEuMTE2czEuODIzLDAuMzcyLDIuNTY3LDEuMTE2bDE1LjI5LDE1LjI5bDE1LjI5LTE1LjI5IGMwLjc0NC0wLjc0NCwxLjYtMS4xMTYsMi41NjctMS4xMTZjMC45NjcsMCwxLjgyMiwwLjM3MiwyLjU2NiwxLjExNmwxNi4yOTUsMTYuMjk0YzAuNzQ0LDAuNzQ0LDEuMTE2LDEuNiwxLjExNiwyLjU2NyBzLTAuMzcyLDEuODIzLTEuMTE2LDIuNTY3bC0xNS4yOSwxNS4yOWwxNS4yOSwxNS4yOWMwLjc0NCwwLjc0NCwxLjExNiwxLjYsMS4xMTYsMi41NjcgQzEyMy41NDksMTA0LjUzOSwxMjMuMTc3LDEwNS4zOTQsMTIyLjQzMywxMDYuMTM4eiBNMTQ2LjQyOSw4NS43MTRjMC0xMS4wMTItMi43MTctMjEuMTY4LTguMTQ4LTMwLjQ2OSBzLTEyLjc5Ny0xNi42NjctMjIuMDk4LTIyLjA5OFM5Ni43MjYsMjUsODUuNzE0LDI1cy0yMS4xNjgsMi43MTYtMzAuNDY5LDguMTQ3UzM4LjU3OSw0NS45NDUsMzMuMTQ3LDU1LjI0NlMyNSw3NC43MDMsMjUsODUuNzE0IHMyLjcxNiwyMS4xNjgsOC4xNDcsMzAuNDY5czEyLjc5NywxNi42NjYsMjIuMDk4LDIyLjA5OHMxOS40NTcsOC4xNDgsMzAuNDY5LDguMTQ4czIxLjE2OC0yLjcxNywzMC40NjktOC4xNDggczE2LjY2Ni0xMi43OTcsMjIuMDk4LTIyLjA5OFMxNDYuNDI5LDk2LjcyNiwxNDYuNDI5LDg1LjcxNHogTTE3MS40MjksODUuNzE0YzAsMTUuNTUxLTMuODMyLDI5Ljg5My0xMS40OTYsNDMuMDI0IGMtNy42NjQsMTMuMTMzLTE4LjA2MiwyMy41My0zMS4xOTQsMzEuMTk0Yy0xMy4xMzIsNy42NjQtMjcuNDc0LDExLjQ5Ni00My4wMjQsMTEuNDk2cy0yOS44OTItMy44MzItNDMuMDI0LTExLjQ5NiBjLTEzLjEzMy03LjY2NC0yMy41MzEtMTguMDYyLTMxLjE5NC0zMS4xOTRDMy44MzIsMTE1LjYwNywwLDEwMS4yNjUsMCw4NS43MTRTMy44MzIsNTUuODIyLDExLjQ5Niw0Mi42OSBjNy42NjQtMTMuMTMzLDE4LjA2Mi0yMy41MzEsMzEuMTk0LTMxLjE5NEM1NS44MjIsMy44MzIsNzAuMTY0LDAsODUuNzE0LDBzMjkuODkzLDMuODMyLDQzLjAyNCwxMS40OTYgYzEzLjEzMyw3LjY2NCwyMy41MywxOC4wNjIsMzEuMTk0LDMxLjE5NEMxNjcuNTk3LDU1LjgyMiwxNzEuNDI5LDcwLjE2NCwxNzEuNDI5LDg1LjcxNHoiLz48L3N2Zz4=)}.gitter-open-chat-button{z-index:100;position:fixed;bottom:0;right:10px;padding:1em 3em;background-color:#36bc98;border:0;border-top-left-radius:.5em;border-top-right-radius:.5em;font-family:sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;text-align:center;text-decoration:none;cursor:pointer;cursor:hand;transition:all .3s ease}.gitter-open-chat-button,.gitter-open-chat-button:visited{box-sizing:border-box;color:#fff}.gitter-open-chat-button:focus,.gitter-open-chat-button:hover{box-sizing:border-box;background-color:#3ea07f;color:#fff}.gitter-open-chat-button:focus{box-sizing:border-box;box-shadow:0 0 8px rgba(62,160,127,.6);outline:none}.gitter-open-chat-button:active{box-sizing:border-box;color:#eee}.gitter-open-chat-button.is-collapsed{box-sizing:border-box;transform:translateY(120%)}</style><title>Utiliser Axios pour consommer des API — Vue.js</title>
+    
+    <meta name="description" content="Vue.js - Le Framework JavaScript Évolutif">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="alternate" hreflang="x-default" href="https://vuejs.org/v2/cookbook/using-axios-to-consume-apis.html">
+    <link rel="alternate" hreflang="zh" href="https://cn.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html">
+    <link rel="alternate" hreflang="ja" href="https://jp.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html">
+    <link rel="alternate" hreflang="ru" href="https://ru.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html">
+    <link rel="alternate" hreflang="ko" href="https://kr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html">
+    <link rel="alternate" hreflang="pt-BR" href="https://br.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html">
+    <link rel="alternate" hreflang="fr" href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html">
+    <link rel="alternate" hreflang="es" href="https://es.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Utiliser Axios pour consommer des API — Vue.js">
+    <meta property="og:description" content="Vue.js - Le Framework JavaScript Évolutif">
+    <meta property="og:image" content="https://vuejs.org//images/logo.png">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Utiliser Axios pour consommer des API — Vue.js">
+    <meta name="twitter:description" content="Vue.js - Le Framework JavaScript Évolutif">
+    <meta name="twitter:image" content="https://vuejs.org/images/logo.png">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://fr.vuejs.org/images/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://fr.vuejs.org/images/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://fr.vuejs.org/images/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://fr.vuejs.org/images/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://fr.vuejs.org/images/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://fr.vuejs.org/images/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://fr.vuejs.org/images/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://fr.vuejs.org/images/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://fr.vuejs.org/images/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://fr.vuejs.org/images/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://fr.vuejs.org/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://fr.vuejs.org/images/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://fr.vuejs.org/images/icons/favicon-16x16.png">
+    <meta name="msapplication-TileImage" content="/images/icons/ms-icon-144x144.png">
+    <link rel="icon" href="./Utiliser Axios pour consommer des API — Vue.js_files/logo.png" type="image/png">
+
+    <meta name="msapplication-TileColor" content="#4fc08d">
+    <meta name="theme-color" content="#4fc08d">
+
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <link rel="manifest" href="https://fr.vuejs.org/manifest.json">
+
+    <link href="https://fonts.googleapis.com/" rel="preconnect" crossorigin="">
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin="">
+    <link href="https://maxcdn.bootstrapcdn.com/" rel="preconnect" crossorigin="">
+
+    <link href="./Utiliser Axios pour consommer des API — Vue.js_files/css(1)" rel="stylesheet">
+    <link href="./Utiliser Axios pour consommer des API — Vue.js_files/css(2)" rel="stylesheet">
+
+    <link href="./Utiliser Axios pour consommer des API — Vue.js_files/font-awesome.min.css" rel="stylesheet">
+
+    <!-- main page styles -->
+    <link rel="stylesheet" href="./Utiliser Axios pour consommer des API — Vue.js_files/page.css">
+
+    <!-- this needs to be loaded before guide's inline scripts -->
+    <script async="" src="./Utiliser Axios pour consommer des API — Vue.js_files/analytics.js.télécharger"></script><script src="./Utiliser Axios pour consommer des API — Vue.js_files/vue.js(1).télécharger"></script>
+
+    
+
+    <script>
+      Vue.config.productionTip = false
+      window.PAGE_TYPE = "cookbook"
+    </script>
+
+    <!-- ga -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-46852172-1', 'vuejs.org');
+      ga('send', 'pageview');
+    </script>
+
+    <!-- vimeo analytics -->
+    <script type="text/javascript" defer="defer" src="./Utiliser Axios pour consommer des API — Vue.js_files/72160148.js.télécharger"></script>
+  <div id="_bsa_srv-CKYD62QM_0"></div><script id="_carbonads_projs" type="text/javascript" src="./Utiliser Axios pour consommer des API — Vue.js_files/CEBDT27Y.json"></script></head>
+  <body class="docs">
+    <div id="mobile-bar">
+      <a class="menu-button"></a>
+      <a class="logo" href="https://fr.vuejs.org/"></a>
+    </div>
+    <div>
+  <div id="v3-banner">
+    <span class="hidden-sm">Vous naviguez sur la documentation de Vue v2.x et précédentes.</span>
+    <a href="https://v3.vuejs.org/">Cliquez ici</a> pour la documentation v3.x.
+  </div>
+
+  <header id="header">
+    <a id="logo" href="https://fr.vuejs.org/">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/logo.png" alt="Vue logo">
+      <span>Vue.js</span>
+    </a>
+    <ul id="nav">
+      <li>
+  <form id="search-form">
+    <input type="text" id="search-query-nav" class="search-query st-default-search-input aa-input" aria-label="Search" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-0" dir="auto" style=""><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Arial; font-size: 13.3333px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre>
+  </form>
+</li>
+<li class="nav-dropdown-container learn">
+  <a class="nav-link current">Doc</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><h4>Documentations</h4></li>
+    <li>
+      <ul>
+        <li><a href="https://fr.vuejs.org/v2/guide/" class="nav-link">Guide</a></li>
+        <li><a href="https://fr.vuejs.org/v2/api/" class="nav-link">API</a></li>
+        <li><a href="https://fr.vuejs.org/v2/style-guide/" class="nav-link">Conventions</a></li>
+        <li><a href="https://fr.vuejs.org/v2/examples/" class="nav-link">Exemples</a></li>
+        <li><a href="https://fr.vuejs.org/v2/cookbook/" class="nav-link current">Tutoriels</a></li>
+      </ul>
+    </li>
+    <li><h4>Videos</h4></li>
+    <li>
+      <ul>
+        <li>
+          <a href="https://www.vuemastery.com/courses/" class="nav-link" target="_blank" rel="sponsored noopener">
+            Vue Mastery (EN)
+          </a>
+        </li>
+        <li>
+          <a href="https://vueschool.io/?friend=vuejs&amp;utm_source=Vuejs.org&amp;utm_medium=Link&amp;utm_content=Navbar%20Dropdown" class="nav-link" target="_blank" rel="sponsored noopener">
+            Vue School (EN)
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container ecosystem">
+  <a class="nav-link">Écosystème</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><h4>Aide</h4></li>
+    <li><ul>
+      <li><a href="https://forum.vuejs.org/c/french" class="nav-link" target="_blank" rel="noopener">Forum</a></li>
+      <li><a href="https://discordapp.com/channels/325477692906536972/360669119948783616" class="nav-link" target="_blank" rel="noopener">Chat</a></li>
+      <li><a href="https://events.vuejs.org/meetups/" class="nav-link" target="_blank" rel="noopener">Meetups (EN)</a></li>
+    </ul></li>
+    <li><h4>Outils</h4></li>
+    <li>
+      <ul>
+        <li><a href="https://github.com/vuejs/vue-devtools" class="nav-link" target="_blank" rel="noopener">Devtools (EN)</a></li>
+        <li><a href="https://cli.vuejs.org/" class="nav-link" target="_blank" rel="noopener">Vue CLI (EN)</a></li>
+        <li><a href="https://vue-loader.vuejs.org/" class="nav-link" target="_blank" rel="noopener">Vue Loader (EN)</a></li>
+      </ul>
+    </li>
+    <li><h4>Bibliothèques officielles</h4></li>
+    <li><ul>
+      <li><a href="https://router.vuejs.org/" class="nav-link" target="_blank" rel="noopener">Vue Router</a></li>
+      <li><a href="https://vuex.vuejs.org/" class="nav-link" target="_blank" rel="noopener">Vuex</a></li>
+      <li><a href="https://ssr.vuejs.org/" class="nav-link" target="_blank" rel="noopener">Vue Server Renderer</a></li>
+    </ul></li>
+    <li><h4>Infos</h4></li>
+    <li><ul>
+      <li><a href="https://news.vuejs.org/" class="nav-link" target="_blank" rel="noopener">Actualités (EN)</a></li>
+      <li><a href="https://github.com/vuejs/vue/projects/6" class="nav-link" target="_blank" rel="noopener">Plans futurs (EN)</a></li>
+      <li><a href="https://events.vuejs.org/" class="nav-link" target="_blank" rel="noopener">Évènements (EN)</a></li>
+      <li><a href="https://twitter.com/vuejs" class="nav-link" target="_blank" rel="noopener">Twitter (EN)</a></li>
+      <li><a href="https://medium.com/the-vue-point" class="nav-link" target="_blank" rel="noopener">Blog (EN)</a></li>
+      <li><a href="https://vuejobs.com/?ref=vuejs" class="nav-link" target="_blank" rel="noopener">Offres d'emploi (EN)</a></li>
+      <li><a href="https://dev.to/t/vue" class="nav-link" target="_blank" rel="noopener">Communauté DEV (EN)</a></li>
+    </ul></li>
+  </ul>
+</li>
+
+<li>
+  <a href="https://fr.vuejs.org/v2/guide/team.html" class="nav-link team">Équipe</a>
+</li>
+<li class="nav-dropdown-container resources">
+  <a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#" class="nav-link">Resources</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><a href="https://fr.vuejs.org/resources/partners.html" class="nav-link">Partenaires</a></li>
+    <li><a href="https://fr.vuejs.org/resources/themes.html" class="nav-link">Thèmes</a></li>
+    <li><a href="https://github.com/vuejs/awesome-vue" class="nav-link" target="_blank">Awesome Vue (EN)</a></li>
+    <li><a href="https://awesomejs.dev/for/vue/" class="nav-link" target="_blank" rel="noopener">Packages pour Vue (EN)</a></li>
+  </ul>
+</li>
+
+<!-- <li>
+  <a href="/partners" class="nav-link ">Partners</a>
+</li> -->
+<li class="nav-dropdown-container support-vue">
+  <a href="https://fr.vuejs.org/support-vuejs/" class="nav-link">Soutien</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><a href="https://fr.vuejs.org/support-vuejs/#One-time-Donations" class="nav-link">Dons ponctuel</a></li>
+    <li><a href="https://fr.vuejs.org/support-vuejs/#Recurring-Pledges" class="nav-link">Soutiens récurrent</a></li>
+    <li><a href="https://vue.threadless.com/" target="_blank" rel="noopener" class="nav-link">La boutique</a></li>
+  </ul>
+</li>
+
+<li class="nav-dropdown-container language">
+  <a class="nav-link">Langues</a><span class="arrow"></span>
+  <ul class="nav-dropdown">
+    <li><a href="https://cn.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">中文</a></li>
+    <li><a href="https://jp.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">日本語</a></li>
+    <li><a href="https://ru.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">Русский</a></li>
+    <li><a href="https://kr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">한국어</a></li>
+    <li><a href="https://vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">English</a></li>
+    <li><a href="https://br.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">Português</a></li>
+    <li><a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">Français</a></li>
+    <li><a href="https://vi.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">Tiếng Việt</a></li>
+    <li><a href="https://es.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">Español</a></li>
+    <li><a href="https://docs.vuejs.id/v2/cookbook/using-axios-to-consume-apis.html" class="nav-link">Bahasa Indonesia</a></li>
+  </ul>
+</li>
+
+
+    </ul>
+  </header>
+</div>
+
+    
+      <div id="main" class="fix-sidebar">
+        
+  
+
+<div class="sidebar">
+  <div class="sidebar-inner">
+    
+    <div class="list">
+      <div id="sidebar-sponsors-special">
+  <div class="main-sponsor">
+    <span>Special Sponsor</span>
+    <div>
+    <a href="https://autocode.com/" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/autocode.svg" alt="Autocode">
+    </a>
+    </div>
+  </div>
+</div>
+
+<div id="sidebar-sponsors-platinum-left">
+  <div class="main-sponsor">
+    <span>Sponsors de platine</span>
+    <div>
+    <a href="https://vueschool.io/?utm_source=Vuejs.org&amp;utm_medium=Banner&amp;utm_campaign=Sponsored%20Banner&amp;utm_content=V1" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/vueschool.png" alt="VueSchool">
+    </a>
+    <a href="https://vehikl.com/" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/vehikl.png" alt="Vehikl">
+    </a>
+    <a href="https://retool.com/?utm_source=sponsor&amp;utm_campaign=vue" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/retool.png" alt="Retool">
+    </a>
+    <a href="https://passionatepeople.io/" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/passionate_people.png" alt="Passionate People">
+    </a>
+    <a href="https://www.storyblok.com/" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/storyblok.png" alt="Storyblok">
+    </a>
+    </div>
+  </div>
+  <a class="become-backer" href="https://fr.vuejs.org/support-vuejs">
+    Devenez un sponsor
+  </a>
+</div>
+
+
+
+      
+        <h2>
+          
+          Tutoriels<sup class="beta">beta</sup>
+          
+        </h2>
+        <ul class="menu-root">
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/index.html" class="sidebar-link">Introduction</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/adding-instance-properties.html" class="sidebar-link">Ajouter des propriétés aux instances</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/form-validation.html" class="sidebar-link">Form Validation</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/editable-svg-icons.html" class="sidebar-link">Système d'Icônes SVG Dynamiques</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/serverless-blog.html" class="sidebar-link">Créer un blog alimenté par un CMS</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/unit-testing-vue-components.html" class="sidebar-link">Test Unitaire des Composants Vue</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/creating-custom-scroll-directives.html" class="sidebar-link">Créer une directive de défilement personnalisée</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/debugging-in-vscode.html" class="sidebar-link">Déboguer dans VS Code</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html" class="sidebar-link current">Utiliser Axios pour consommer des API</a>
+    <ul class="menu-sub"><li><a class="section-link active" data-scroll="" href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Exemple-simple">Exemple simple</a></li><li><a class="section-link" data-scroll="" href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Exemple-concret-l%E2%80%99utilisation-des-donnees">Exemple concret : l’utilisation des données</a><ul><li><a class="section-link" data-scroll="" href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Affichage-des-donnees-d%E2%80%99une-API">Affichage des données d’une API</a></li><li><a class="section-link" data-scroll="" href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Travailler-avec-des-erreurs">Travailler avec des erreurs</a></li></ul></li><li><a class="section-link" data-scroll="" href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Modeles-alternatifs">Modèles alternatifs</a><ul><li><a class="section-link" data-scroll="" href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Fetch-API">Fetch API</a></li></ul></li><li><a class="section-link" data-scroll="" href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Aller-plus-loin">Aller plus loin</a></li></ul></li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/avoiding-memory-leaks.html" class="sidebar-link">Éviter les fuites de mémoire</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/client-side-storage.html" class="sidebar-link">Stockage côté client</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/packaging-sfc-for-npm.html" class="sidebar-link">Réaliser un composant Vue pour npm</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/dockerize-vuejs-app.html" class="sidebar-link">Dockeriser une app Vue.js</a>
+    </li>
+  
+    
+    
+    <li>
+      <a href="https://fr.vuejs.org/v2/cookbook/practical-use-of-scoped-slots.html" class="sidebar-link">Practical use of scoped slots with GoogleMaps (EN)</a>
+    </li>
+  
+</ul>
+
+      
+    </div>
+  </div>
+</div>
+
+<div id="sidebar-sponsors-platinum-right">
+  <div class="main-sponsor">
+    <span>Sponsors de platine</span>
+    <div>
+    <a href="https://vueschool.io/?utm_source=Vuejs.org&amp;utm_medium=Banner&amp;utm_campaign=Sponsored%20Banner&amp;utm_content=V1" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/vueschool.png" alt="VueSchool">
+    </a>
+    <a href="https://vehikl.com/" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/vehikl.png" alt="Vehikl">
+    </a>
+    <a href="https://retool.com/?utm_source=sponsor&amp;utm_campaign=vue" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/retool.png" alt="Retool">
+    </a>
+    <a href="https://passionatepeople.io/" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/passionate_people.png" alt="Passionate People">
+    </a>
+    <a href="https://www.storyblok.com/" target="_blank" rel="sponsored noopener" class="logo">
+      <img src="./Utiliser Axios pour consommer des API — Vue.js_files/storyblok.png" alt="Storyblok">
+    </a>
+    </div>
+  </div>
+  <a class="become-backer" href="https://fr.vuejs.org/support-vuejs">
+    Devenez un sponsor
+  </a>
+</div>
+
+
+
+
+<div class="content cookbook with-sidebar ">
+  <p class="tip warning v3-warning">
+    You’re browsing the documentation for v2.x and earlier.
+    For v3.x, <a href="https://v3.vuejs.org/">click here</a>.
+  </p>
+
+  
+    
+      
+<div id="ad">
+  <script async="" type="text/javascript" src="./Utiliser Axios pour consommer des API — Vue.js_files/carbon.js.télécharger" id="_carbonads_js">
+  </script>
+</div>
+
+
+    
+  
+  
+    <h1>Utiliser Axios pour consommer des API</h1>
+  
+  
+    <h2 id="Exemple-simple"><a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Exemple-simple" class="headerlink" title="Exemple simple" data-scroll="">Exemple simple</a></h2><p>Lors de la création d’une application Web, il est fréquent que vous souhaitiez utiliser et afficher les données provenant d’une API. Il existe plusieurs manières de le faire, mais une approche très populaire consiste à utiliser <a href="https://github.com/axios/axios" target="_blank" rel="noopener">axios</a>, un client HTTP basé sur les Promesses.</p><p></p>
+<p>Dans cet exemple, nous allons utiliser l’<a href="https://www.coindesk.com/api/" target="_blank" rel="noopener">API CoinDesk</a> pour afficher les prix du Bitcoin qui sont mis à jour toutes les minutes. Premièrement, nous devons installer axios avec npm/yarn ou à partir d’un lien CDN.</p>
+<p>Il existe plusieurs manières d’interroger une API, mais il est préférable de d’abord connaitre la structure des données qu’elle renvoie afin de savoir ce qu’elle va afficher. Pour ce faire, nous allons appeler le point de terminaison de l’API et afficher le résultat afin que nous puissions connaître sa structure et son contenu. Nous pouvons voir dans la documentation de l’API de CoinDesk que l’appel doit être effectué à l’adresse <code>https://api.coindesk.com/v1/bpi/currentprice.json</code>. Nous allons donc commencer par créer une donnée qui gardera nos informations, puis nous récupérerons les données et les attribuerons à l’aide de l’étape <code>mounted</code> du cycle de vie :</p>
+<pre><code class="hljs js"><span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app'</span>,
+  data () {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">info</span>: <span class="hljs-literal">null</span>
+    }
+  },
+  mounted () {
+    axios
+      .get(<span class="hljs-string">'https://api.coindesk.com/v1/bpi/currentprice.json'</span>)
+      .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> (<span class="hljs-keyword">this</span>.info = response))
+  }
+})</code></pre>
+<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span>
+  {{ info }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<p>Nous obtenons ceci :</p>
+<p></p><div class="cp_embed_wrapper"><iframe allowfullscreen="true" allowpaymentrequest="true" allowtransparency="true" class="cp_embed_iframe " frameborder="0" height="350" width="100%" name="cp_embed_1" scrolling="no" src="./Utiliser Axios pour consommer des API — Vue.js_files/80043dfdb7b90f138f5585ade1a5286f(1).html" style="width: 100%; overflow:hidden; display:block;" title="Premiere étape Axios et Vue" loading="lazy" id="cp_embed_80043dfdb7b90f138f5585ade1a5286f"></iframe></div><p></p>
+<script async="" src="./Utiliser Axios pour consommer des API — Vue.js_files/ei.js.télécharger"></script>
+
+<p>Parfait ! Nous avons des données. Mais cela semble assez désordonné pour le moment, alors affichons-les correctement et ajoutons un traitement d’erreur si les choses ne fonctionnent pas comme prévu, ou s’il faut plus de temps que nécessaire pour obtenir les informations.</p>
+<h2 id="Exemple-concret-l’utilisation-des-donnees"><a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Exemple-concret-l%E2%80%99utilisation-des-donnees" class="headerlink" title="Exemple concret : l’utilisation des données" data-scroll="">Exemple concret : l’utilisation des données</a></h2><h3 id="Affichage-des-donnees-d’une-API"><a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Affichage-des-donnees-d%E2%80%99une-API" class="headerlink" title="Affichage des données d’une API" data-scroll="">Affichage des données d’une API</a></h3><p>Il est assez courant que les informations dont nous avons besoin se trouvent dans la réponse. Nous devons parcourir ce que nous venons de stocker pour y accéder correctement. Dans notre cas, nous pouvons voir que les informations de prix dont nous avons besoin sont stockées dans <code>response.data.bpi</code>. Si nous l’utilisons, notre sortie sera :</p>
+<pre><code class="hljs js">axios
+  .get(<span class="hljs-string">'https://api.coindesk.com/v1/bpi/currentprice.json'</span>)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> (<span class="hljs-keyword">this</span>.info = response.data.bpi))</code></pre>
+<p></p><div class="cp_embed_wrapper"><iframe allowfullscreen="true" allowpaymentrequest="true" allowtransparency="true" class="cp_embed_iframe " frameborder="0" height="200" width="100%" name="cp_embed_2" scrolling="no" src="./Utiliser Axios pour consommer des API — Vue.js_files/6100b10f1b4ac2961208643560ba7d11(1).html" style="width: 100%; overflow:hidden; display:block;" title="Deuxième étape Axios et Vue" loading="lazy" id="cp_embed_6100b10f1b4ac2961208643560ba7d11"></iframe></div><p></p>
+<script async="" src="./Utiliser Axios pour consommer des API — Vue.js_files/ei.js.télécharger"></script>
+
+<p>C’est beaucoup plus facile à afficher ; nous pouvons donc mettre à jour notre code HTML pour n’afficher que les informations dont nous avons besoin à partir des données reçues. Pour ce faire, nous allons créer un <a href="https://fr.vuejs.org/v2/api/#Vue-filter">filtre</a> pour nous assurer que la décimale se trouve également à la place appropriée.</p>
+<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Bitcoin Price Index<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"currency in info"</span>
+    <span class="hljs-attr">class</span>=<span class="hljs-string">"currency"</span>
+  &gt;</span>
+    {{ currency.description }}:
+    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"lighten"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-html</span>=<span class="hljs-string">"currency.symbol"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>{{ currency.rate_float | currencydecimal }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<pre><code class="hljs js">filters: {
+  currencydecimal (value) {
+    <span class="hljs-keyword">return</span> value.toFixed(<span class="hljs-number">2</span>)
+  }
+},</code></pre>
+<p></p><div class="cp_embed_wrapper"><iframe allowfullscreen="true" allowpaymentrequest="true" allowtransparency="true" class="cp_embed_iframe " frameborder="0" height="300" width="100%" name="cp_embed_3" scrolling="no" src="./Utiliser Axios pour consommer des API — Vue.js_files/9d59319c09eaccfaf35d9e9f11990f0f(1).html" style="width: 100%; overflow:hidden; display:block;" title="Troisieme étape Axios et Vue" loading="lazy" id="cp_embed_9d59319c09eaccfaf35d9e9f11990f0f"></iframe></div><p></p>
+<script async="" src="./Utiliser Axios pour consommer des API — Vue.js_files/ei.js.télécharger"></script>
+
+<h3 id="Travailler-avec-des-erreurs"><a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Travailler-avec-des-erreurs" class="headerlink" title="Travailler avec des erreurs" data-scroll="">Travailler avec des erreurs</a></h3><p>Parfois, nous ne pouvons pas recevoir de données de l’API. Il peut y avoir de nombreuses raisons pour qu’un appel puisse échouer. Par exemple :  </p>
+<ul>
+<li>L’API est hors-service.</li>
+<li>La requête a mal été réalisée.</li>
+<li>L’API ne nous donne pas les informations dans le format attendu.</li>
+</ul>
+<p>Quand nous créons cette requête, nous devrions vérifier si de tels cas se produisent et nous informer pour traiter ce problème. Dans un appel axios, nous pouvons le faire en utilisant <code>catch</code>.</p>
+<pre><code class="hljs js">axios
+  .get(<span class="hljs-string">'https://api.coindesk.com/v1/bpi/currentprice.json'</span>)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> (<span class="hljs-keyword">this</span>.info = response.data.bpi))
+  .catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(error))</code></pre>
+<p>Cela nous permettra de savoir si quelque chose a échoué lors de la requête à l’API, mais que se passerait-il si les données sont endommagées ou si l’API est en panne ? Pour l’instant, l’utilisateur ne verra rien. Nous devrions peut-être créer un loader pour ce cas, puis informer l’utilisateur si nous ne pouvons pas obtenir les données.</p>
+<pre><code class="hljs js"><span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app'</span>,
+  data () {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">info</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">loading</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">errored</span>: <span class="hljs-literal">false</span>
+    }
+  },
+  <span class="hljs-attr">filters</span>: {
+    currencydecimal (value) {
+      <span class="hljs-keyword">return</span> value.toFixed(<span class="hljs-number">2</span>)
+    }
+  },
+  mounted () {
+    axios
+      .get(<span class="hljs-string">'https://api.coindesk.com/v1/bpi/currentprice.json'</span>)
+      .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+        <span class="hljs-keyword">this</span>.info = response.data.bpi
+      })
+      .catch(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {
+        <span class="hljs-built_in">console</span>.log(error)
+        <span class="hljs-keyword">this</span>.errored = <span class="hljs-literal">true</span>
+      })
+      .finally(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">this</span>.loading = <span class="hljs-literal">false</span>)
+  }
+})</code></pre>
+<pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Bitcoin Price Index<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"errored"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Nous sommes désolés, nous ne sommes pas en mesure de récupérer ces informations pour le moment. Veuillez réessayer ultérieurement.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">v-else</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"loading"</span>&gt;</span>Chargement...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+      <span class="hljs-attr">v-else</span>
+      <span class="hljs-attr">v-for</span>=<span class="hljs-string">"currency in info"</span>
+      <span class="hljs-attr">class</span>=<span class="hljs-string">"currency"</span>
+    &gt;</span>
+      {{ currency.description }}:
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"lighten"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-html</span>=<span class="hljs-string">"currency.symbol"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>{{ currency.rate_float | currencydecimal }}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<p>Vous pouvez appuyer sur le bouton de réexécution de cet exemple pour connaitre brièvement l’état du chargement pendant la collecte des données à partir de l’API :</p>
+<p></p><div class="cp_embed_wrapper"><iframe allowfullscreen="true" allowpaymentrequest="true" allowtransparency="true" class="cp_embed_iframe " frameborder="0" height="300" width="100%" name="cp_embed_4" scrolling="no" src="./Utiliser Axios pour consommer des API — Vue.js_files/6c01922c9af3883890fd7393e8147ec4.html" style="width: 100%; overflow:hidden; display:block;" title="Quatrième étape Axios et Vue" loading="lazy" id="cp_embed_6c01922c9af3883890fd7393e8147ec4"></iframe></div><p></p>
+<script async="" src="./Utiliser Axios pour consommer des API — Vue.js_files/ei.js.télécharger"></script>
+
+<p>Cela peut encore être amélioré avec l’utilisation de composants pour différentes sections et un rapport d’erreurs plus distinct, en fonction de l’API utilisée et de la complexité de votre application.</p>
+<h2 id="Modeles-alternatifs"><a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Modeles-alternatifs" class="headerlink" title="Modèles alternatifs" data-scroll="">Modèles alternatifs</a></h2><h3 id="Fetch-API"><a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Fetch-API" class="headerlink" title="Fetch API" data-scroll="">Fetch API</a></h3><p>L’<a href="https://developers.google.com/web/updates/2015/03/introduction-to-fetch" target="_blank" rel="noopener">API Fetch</a> est une API native puissante pour ces types de demandes. Vous avez peut-être entendu dire que l’un des avantages de l’API Fetch est qu’il n’est pas nécessaire de charger une ressource externe pour l’utiliser, ce qui est vrai ! Sauf que… ce n’est pas encore complètement supporté, vous aurez donc toujours besoin d’utiliser un polyfill. Il y a aussi quelques pièges à éviter avec cette API, raison pour laquelle beaucoup préfèrent utiliser axios pour le moment. Cela pourrait cependant très bien changer dans le futur.</p>
+<p>Si vous êtes intéressé par l’utilisation de l’API Fetch vous trouverez de <a href="https://scotch.io/@bedakb/lets-build-type-ahead-component-with-vuejs-2-and-fetch-api" target="_blank" rel="noopener">très bons articles</a> expliquant comment faire.</p>
+<h2 id="Aller-plus-loin"><a href="https://fr.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html#Aller-plus-loin" class="headerlink" title="Aller plus loin" data-scroll="">Aller plus loin</a></h2><p>Il existe de nombreuses façons de travailler avec Vue et axios au-delà de la consommation et de l’affichage d’une API. Vous pouvez également communiquer avec des Fonctions Sans Serveur, publier / éditer / supprimer à partir d’une API où vous disposez d’un accès en écriture, et de nombreux autres avantages. En raison de l’intégration directe de ces deux bibliothèques, c’est devenu un choix très courant pour les développeurs qui doivent intégrer des clients HTTP à leur workflow.</p>
+
+  
+  
+  <div class="footer">
+      <script src="./Utiliser Axios pour consommer des API — Vue.js_files/monetization.js.télécharger" type="text/javascript"></script>
+<div id="bsa-native"><div id="_custom_" data-attributes="{&quot;type&quot;:&quot;custom&quot;,&quot;key&quot;:&quot;CKYD62QM&quot;,&quot;segment&quot;:&quot;placement:vuejsorg&quot;,&quot;options&quot;:{&quot;target&quot;:&quot;#bsa-native&quot;,&quot;template&quot;:&quot;&lt;a class=\&quot;native-box\&quot; href=\&quot;##statlink##\&quot;&gt;&lt;div class=\&quot;native-sponsor\&quot;&gt;Sponsor&lt;/div&gt;&lt;div class=\&quot;native-text\&quot;&gt;&lt;strong&gt;##company##&lt;/strong&gt; — ##description##&lt;/div&gt;&lt;/a&gt;&quot;,&quot;script_id&quot;:&quot;_bsa_srv-CKYD62QM_0&quot;,&quot;platforms&quot;:[&quot;desktop&quot;,&quot;mobile&quot;]},&quot;ads&quot;:[{&quot;active&quot;:&quot;1&quot;,&quot;ad_via_link&quot;:&quot;http://selfserve.buysellads.com/checkout/new/?utm_source=vuejs-org-custom&amp;utm_medium=ad_via_link&amp;utm_campaign=in_unit&amp;utm_term=custom&quot;,&quot;backgroundColor&quot;:&quot;#FFFFFF&quot;,&quot;backgroundHoverColor&quot;:&quot;#FFFFFF&quot;,&quot;bannerid&quot;:&quot;425603&quot;,&quot;callToAction&quot;:&quot;Start Learning Today&quot;,&quot;company&quot;:&quot;Educative&quot;,&quot;companyTagline&quot;:&quot;Level Up Your Coding Skills in Half the Time.&quot;,&quot;creativeid&quot;:&quot;471909&quot;,&quot;ctaBackgroundColor&quot;:&quot;#4951f5&quot;,&quot;ctaBackgroundHoverColor&quot;:&quot;#4951f5&quot;,&quot;ctaTextColor&quot;:&quot;#FFFFFF&quot;,&quot;ctaTextColorHover&quot;:&quot;#FFFFFF&quot;,&quot;description&quot;:&quot;Learn the skills today to empower the businesses of tomorrow. Used by over 500,000 developers worldwide&quot;,&quot;evenodd&quot;:&quot;0&quot;,&quot;external_id&quot;:&quot;91105&quot;,&quot;height&quot;:&quot;0&quot;,&quot;i&quot;:&quot;0&quot;,&quot;identifier&quot;:&quot;ce8407b0f530ec0c464687c10654d7d1&quot;,&quot;image&quot;:&quot;https://cdn4.buysellads.net/uu/1/97758/1628283650-icon-solid-80x80.png&quot;,&quot;logo&quot;:&quot;https://cdn4.buysellads.net/uu/1/97758/1628283656-logo-250x100-_-black.png&quot;,&quot;longimp&quot;:&quot;TTGRYFI3TTTTTTHIBEKC4TTTTTTHZCV7K6TTTTTTC4M3AYVTTTTTT&quot;,&quot;longlink&quot;:&quot;T6GRYFI3TTTTTTHIBEKC4TTTTTTHZCV7K6TTTTTTC4M3AYVTTTTTTNJIF3ZNK53MVMDNBIZYG3RDVILL5T76AMSQFH6T&quot;,&quot;num_slots&quot;:&quot;1&quot;,&quot;rendering&quot;:&quot;custom&quot;,&quot;statimp&quot;:&quot;//srv.buysellads.com/ads/imp/x/GTND42JLF6BD4KJIFT7LYKQNCVAITKQUCVSD5Z3JCY7DLK3NCASDT2QKCYSDP2QYCAYIPKJIF6BIP23JCTYI627KC6SD65QIF6AIKK3EHJWNBADLKM7UCBZG2Y&quot;,&quot;statlink&quot;:&quot;//srv.buysellads.com/ads/click/x/GTND42JLF6BD4KJIFT7LYKQNCVAITKQUCVSD5Z3JCY7DLK3NCASDT2QKCYSDP2QYCAYIPKJIF6BIP23JCTYI627KC6SD65QIF6AIKK3EHJNCLSIZ&quot;,&quot;textColor&quot;:&quot;#000000&quot;,&quot;textColorHover&quot;:&quot;#000000&quot;,&quot;timestamp&quot;:&quot;1629400831&quot;,&quot;width&quot;:&quot;0&quot;,&quot;zoneid&quot;:&quot;30255&quot;,&quot;zonekey&quot;:&quot;CKYD62QM&quot;}]}"><a class="native-box" href="https://srv.buysellads.com/ads/click/x/GTND42JLF6BD4KJIFT7LYKQNCVAITKQUCVSD5Z3JCY7DLK3NCASDT2QKCYSDP2QYCAYIPKJIF6BIP23JCTYI627KC6SD65QIF6AIKK3EHJNCLSIZ?segment=placement:vuejsorg;"><div class="native-sponsor">Sponsor</div><div class="native-text"><strong>Educative</strong> — Learn the skills today to empower the businesses of tomorrow. Used by over 500,000 developers worldwide</div></a></div></div>
+<script>
+_bsa.init('custom', 'CKYD62QM', 'placement:vuejsorg',
+  {
+    target: '#bsa-native',
+    template: '<a class="native-box" href="##statlink##"><div class="native-sponsor">Sponsor</div><div class="native-text"><strong>##company##</strong> — ##description##</div></a>'
+  }
+);
+</script>
+
+
+    Une erreur dans cette page ou une envie de contribuer à la traduction ?
+    <a href="https://github.com/vuejs-fr/vuejs.org/blob/master/src/v2/cookbook/using-axios-to-consume-apis.md" rel="noopener" target="_blank">
+      Éditez cette page sur GitHub !
+    </a>
+  </div>
+</div>
+
+      </div>
+      <script src="./Utiliser Axios pour consommer des API — Vue.js_files/smooth-scroll.min.js.télécharger"></script>
+    
+
+    <!-- main custom script for sidebars, version selects etc. -->
+    <script src="./Utiliser Axios pour consommer des API — Vue.js_files/css.escape.js.télécharger"></script>
+    <script src="./Utiliser Axios pour consommer des API — Vue.js_files/common.js.télécharger"></script><script src="./Utiliser Axios pour consommer des API — Vue.js_files/sidecar.v1.js.télécharger" async="" defer=""></script>
+
+    <!-- search -->
+    <link href="./Utiliser Axios pour consommer des API — Vue.js_files/docsearch.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./Utiliser Axios pour consommer des API — Vue.js_files/search.css">
+    <script src="./Utiliser Axios pour consommer des API — Vue.js_files/docsearch.min.js.télécharger"></script>
+    <script>
+    [
+      '#search-query-nav',
+      '#search-query-sidebar',
+      '#search-query-menu'
+    ].forEach(function (selector) {
+      if (!document.querySelector(selector)) return
+      // search index defaults to v2
+      var match = window.location.pathname.match(/^\/(v\d+)/)
+      var version = match ? match[1] : 'v2'
+      docsearch({
+      appId: 'BH4D9OD16A',
+      apiKey: '85cc3221c9f23bfbaa4e3913dd7625ea',
+      indexName: 'vuejs',
+      inputSelector: selector,
+      algoliaOptions: { facetFilters: ["version:" + version] },
+      autocompleteOptions: { hint: false, appendTo: 'body'}
+      })
+    })
+    </script><span class="algolia-autocomplete" style="position: absolute; z-index: 100; display: none; direction: ltr;"><span class="aa-dropdown-menu" role="listbox" id="algolia-autocomplete-listbox-0" style="display: block; left: 0px; right: auto;"><div class="aa-dataset-1"></div></span></span>
+  
+
+<aside class="gitter-chat-embed is-collapsed"><div class="gitter-chat-embed-action-bar"><a class="gitter-chat-embed-action-bar-item gitter-chat-embed-action-bar-item-pop-out" aria-label="Open Chat in Gitter.im" href="https://gitter.im/vuejs-fr/vue" target="_blank" rel="noopener"></a><button class="gitter-chat-embed-action-bar-item gitter-chat-embed-action-bar-item-collapse-chat" aria-label="Collapse Gitter Chat"></button></div><div class="gitter-chat-embed-loading-wrapper">
+        <div class="gitter-chat-embed-loading-indicator gitter-icon"></div>
+      </div></aside><a href="https://gitter.im/vuejs-fr/vue" class="gitter-open-chat-button is-displayed">Feedbacks</a></body></html>
