@@ -30,7 +30,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEaco
+router.beforeEach((to, from, next) => {
   const isAdmin = false;
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
 
