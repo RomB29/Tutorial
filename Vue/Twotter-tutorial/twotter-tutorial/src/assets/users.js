@@ -37,5 +37,14 @@ export const users = [
       "email": null,
       "isAdmin": false,
       "twoots": []
+    },
+    {
+      "id": 5,
+      "username": "RomB",
+      "firstName": "Romain",
+      "lastName": "Bodec",
+      "email": "romain.bodec@hotmail.fr",
+      "isAdmin": true,
+      "twoots": []
     }
   ];

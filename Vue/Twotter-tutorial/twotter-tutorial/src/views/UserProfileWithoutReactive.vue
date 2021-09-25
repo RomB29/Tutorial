@@ -1,38 +1,27 @@
 <template>
   <div class = "user-profile">
       <div class="user-profile__sidebar">
+        <div class="user-profile__user-panel">
           <h1 class="user-profile__user-panel"> @{{ user.username }} </h1>
           <div class="user-profile__admin-badge" v-if="user.isAdmin">
               Admin
+          </div>
+          <div class="user-profile__admin-badge" v-if="!user.isAdmin"> <!-- v-if"!" different of -->
+              User non admin
           </div>
 
           <div class="user-profile__follower-count">
               <strong>Followers: </strong> {{ followers }}
           </div>
-          <form class="user-profile__create-twoot" @submit.prevent="createNewTwoot" :class="{'--exceeded': newTwootCharacterCount > 180}">
-            <label for="newTwoot"><strong>New Twoot</strong> ({{ newTwootCharacterCount }}/180) </label>
-            <textarea id="newTwoot" rows="4" v-model="newTwootContent"/>
-            
-            <div class="user-profile__create-twoot-type">
-              <label for="newTwootType"><strong>Type: </strong></label>
-              <select id=newTwootType v-model="selectedTwootType">
-                <option :value="option.value" v-for="(option, index) in twootTypes" :key="index">
-                 {{ option.name }}
-                </option>
-              </select>
-            </div>
-
-            <button>
-              Twoot!
-            </button>
-          </form>
-      </div>
-      
+        </div>
+        <CreateTwootPanel @add-twoot="addTwoot"/>
+      </div>  
       <div class="user-profile__twoots-wrapper">
           <TwootItem 
-          v-for="twoot in user.twoots" 
-          :key="twoot.id" 
+          v-for="twoot in user.twoots"  
+          :key="twoot.id"
           :username="user.username" 
+          :test2="user.test2"
           :twoot="twoot" 
           @favourite="toggleFavourite" 
           />  <!--will call username and twoot in TwootItem -->
@@ -47,8 +36,9 @@
 </template>
 
 <script>
-import TwootItem from "./TwootItem";
-import CreateTwootPanel from "./CreateTwootPanel";
+import TwootItem from "../components/TwootItem";
+import CreateTwootPanel from "../components/CreateTwootPanel";
+import config from "../const/config";
 export default {
   name: 'user-profile',
   components: { CreateTwootPanel, TwootItem },
@@ -60,6 +50,7 @@ export default {
         username: "RomB",
         firstName: "Romain",
         lastName: "Bodec",
+        test2: config.PERSON,
         email: "romain.bodec@hotmail.fr",
         isAdmin: true,
         twoots: [ 
@@ -92,7 +83,8 @@ export default {
         this.user.twoots.unshift(
           {id: this.user.twoots.length+1, content: twoot});
       }
-  }
+  },
+
 };
 
 </script>
@@ -130,17 +122,6 @@ export default {
         border-top: 1px solid #DFE3E8;
         flex-direction: column;
         padding-top: 10px;
-      
-        &.--exceeded {
-          color: red;
-          border-color: red;
-          button {
-            background-color: red;
-            border: none;
-            color: white;
-
-          }
-        }
       }
     }
 }

@@ -1,14 +1,14 @@
  <template>
     <form class="create-twoot-panel" @submit.prevent="createNewTwoot" :class="{'--exceeded': newTwootCharacterCount > 180}">
         <label for="newTwoot"><strong>New Twoot</strong> ({{ newTwootCharacterCount}}/180) </label>
-        <textarea id="newTwoot" rows="4" v-model="state.newTwootContent"/>
+        <textarea id="newTwoot" rows="4" v-model="newTwootContent"/>
     
         <div class="create-twoot-panel__submit">
             <div class="create-twoot-type">
                 <label for="newTwootType"><strong>Type: </strong></label>
-                <select id=newTwootType v-model="state.selectedTwootType">
-                    <option :value="returnOption.value" v-for="(returnOption) in state.twootTypes" :key="returnOption.cpt">
-                        {{ returnOption.name }}
+                <select id=newTwootType v-model="selectedTwootType">
+                    <option :value="option.value" v-for="(option, index) in twootTypes" :key="index">
+                        {{ option.name }}
                     </option>
                 </select>
             </div>
@@ -21,33 +21,29 @@
 </template>
 
 <script>
-import { reactive, computed } from 'vue';
 export default {
     name: "CreateTwootPanel",
-    
-    setup(props, context) {
-        const state = reactive({
+    data() {
+        return {
             newTwootContent: '',
             selectedTwootType: 'instant',
             twootTypes: [
-                { value: 'draft', name: 'Draft', cpt: 1},
-                { value: 'instant', name: 'Instant Twoot', cpt: 2},
+                { value: 'draft', name: 'Draft'},
+                { value: 'instant', name: 'Instant Twoot'}
             ],
-        })
-        // state will replace this for these above properties
 
-        const newTwootCharacterCount = computed(() => state.newTwootContent.length);
-        /*
-        EQUIVALENT
-        computed: {
-        newTwootCharacterCount() {
-            return this.newTwootContent.length;
+        }
+    },
+  
+  computed: {
+      newTwootCharacterCount() {
+        return this.newTwootContent.length;
       }
   },
-        */
 
-        let createNewTwoot = () => {
-            if (state.selectedTwootType !== 'draft' && state.newTwootContent !== '') {
+  methods: {
+      createNewTwoot() {
+         if (this.selectedTwootType !== 'draft' && this.newTwootContent !== '') {
             /*
             Does not work since the id is handle away
             *this.user.twoots.unshift({
@@ -55,16 +51,12 @@ export default {
             content: this.newTwootContent
             })
             */
-                context.emit('add-twoot', state.newTwootContent); // emit = envoi un evenement
-                state.newTwootContent = '';
-            }
-        };
-        return {
-            state, 
-            newTwootCharacterCount,
-            createNewTwoot,
+            this.$emit('add-twoot', this.newTwootContent)
+            this.newTwootContent = ''
         }
-    },
+      }
+  }
+
 };
 
 </script>

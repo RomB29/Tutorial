@@ -10,6 +10,7 @@ CHILD OF TwootItem (herite attribute)
             </div>
             <div class="twoot-item__content">
                 {{ twoot.content }}
+                {{ test2 }}
             </div>
         </div>
     </div>
@@ -28,11 +29,16 @@ export default {
         twoot: {
             type: Object,
             required: true
+        },
+        test2: {
+            type: String,
+            required: true
         }
     },
     methods: {
         favouriteTwoot(id) {
             this.$emit('favourite', id) // 
+            console.log(id)
             /* 
             Why $emit()?
             Generally, you use $emit() to notify the 
