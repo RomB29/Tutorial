@@ -6,8 +6,8 @@
           Twooter
         </router-link> 
       </div>
-      <div class="navigation__user">
-        {{ state.user.username }}
+      <div class="navigation__user" v-if="user">
+        {{ user.username }}
       </div>
     </nav>
     <router-view/>
@@ -16,20 +16,18 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+// import { reactive } from 'vue';
 //import UserProfile from "./views/UserProfile";
-
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 export default {
   name: 'App',
   //name: ''components: { UserProfile },
   setup() {
-    const state = reactive({
-      user: { 
-        username: '_RomB'
-      }
-    })
+    const store = useStore();
+    const user  = computed(() => store.state.User.user);
     return {
-      state
+      user
     }
   }
 }
