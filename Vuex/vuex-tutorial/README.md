@@ -1,4 +1,4 @@
-# vuex-counter
+# vuex-tutorial
 
 ## Project setup
 ```
